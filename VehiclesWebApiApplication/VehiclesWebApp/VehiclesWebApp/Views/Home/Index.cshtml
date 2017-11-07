@@ -1,0 +1,133 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div ng-app="VehiclesApp">
+    <div ng-controller="VehicleOperations">
+
+        <div ng-hide="IsAddEditVisible">
+            <br />
+
+            <p>
+                Search Filter options: <select ng-model="SelectedFilterAttribute" ng-options="filterAttribute.value as filterAttribute.name for filterAttribute in FilterAttributes" ng-init="SelectedFilterAttribute=vid"></select>
+               
+                Search Value: <input type="text" id="filterAttributeValue" name="filterAttributeValue" ng-model="CurrentFilterAttribute" />
+                <input type="button" value="Apply Filter" ng-click="GetAllVehiclesByFilter()" />
+                <input type="button" value="Clear Filter" ng-click="ResetFilter()" />
+                <span>&nbsp;&nbsp;</span>
+                <span id="Add" class="btn btn-primary margin-right-btn" ng-click="EnableAddVehicle()">
+                    Add Vehicle
+                </span>
+            </p>
+            
+            <br />
+            <br />
+            <div class="col-md-12">
+                <u><strong>Vehicles Summary: </strong></u>
+            </div>
+
+            <table class="table table-hover general-table">
+                <thead class="grid-top-panel">
+                    <tr>
+                        <th>Vehicle Id</th>
+                        <th>Year</th>
+                        <th>Make</th>
+                        <th>Model</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="dataModel in vehicles">
+                        <td>{{dataModel.Id}}</td>
+                        <td> {{dataModel.Year}}</td>
+                        <td> {{dataModel.Make}}</td>
+                        <td>{{dataModel.VModel}}</td>
+
+                        <td style="text-align:left; color:white">
+                            <span>
+                                <span id="save" class="btn btn-primary margin-right-btn" ng-click="EnableEditVehicle(dataModel)">
+                                    Edit
+                                </span>
+                            </span>
+                            <span>&nbsp;</span>
+                           
+                            <span>
+                                <span id="delete" class="btn btn-danger margin-right-btn" ng-click="DeleteVehicle(dataModel)">
+                                    Delete
+                                </span>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot></tfoot>
+            </table>
+        </div>
+
+        <div ng-show="IsAddEditVisible">
+            <hr />
+            <br />
+            <div class="col-md-12">
+                <u><strong>{{ AddUpdateText }} Vehicle Details: </strong></u>
+            </div>
+            <br />
+            <form name="frmVehicle" ng-submit="AddOrUpdate()" class="form-horizontal row-border">
+
+                <div class="col-md-12">
+
+                    <div ng-hide="IsAdd" class="form-group">
+                        <label class="col-md-4 control-label" for="input17"> Vehicle ID</label>
+                        <div class="col-md-7">
+                            <input type="text" id="idVehicleId" class="form-control" name="nameVehicleId" ng-model="Id" readonly />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="input17"> Year</label>
+                        <div class="col-md-7">
+                            <input type="number" class="form-control" name="nameYear" ng-model="Year" min="1950" max="2050" ng-required="true" />
+                           
+
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="input17"> Make</label>
+                        <div class="col-md-7">
+                            <input type="text" id="idMake" class="form-control" name="nameYear" ng-model="Make" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="input17"> Model</label>
+                        <div class="col-md-7">
+                            <input type="text" id="idVModel" class="form-control" name="nameVModel" ng-model="VModel" required />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-7">
+
+                            <input type="submit" class="btn btn-success margin-right-btn" value="{{AddUpdateText}}">
+
+                           
+                            <span>&nbsp;</span>
+                            <span id="cancel" class="btn btn-danger margin-right-btn" ng-click="Reset()">
+                                Cancel
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Scripts/NgScripts/VehiclesNgApp.js"></script>
+<script src="~/Scripts/NgScripts/VehiclesNgControllers.js"></script>
+<script src="~/Scripts/NgScripts/VehiclesNgServices.js"></script>
+
+
+
